@@ -16,6 +16,7 @@ import Checkbox from './components/Checkbox';
 
 
 
+
 export default function App() {
   const [openCamera, setOpenCamera] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -82,6 +83,7 @@ export default function App() {
         <SwitchComponent />
         <AudioComponent />
         <Checkbox />
+
 
       </ScrollView>
 
