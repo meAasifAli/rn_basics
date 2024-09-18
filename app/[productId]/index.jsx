@@ -3,13 +3,17 @@ import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { router, useLocalSearchParams } from 'expo-router';
-import useProductStore from '../../store/useProductStore';
-import useCartStore from '../../store/useCartStore'
+import { addToCart } from '../../store/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProduct } from '../../store/productSlice';
+
 
 const PostDetail = () => {
+    const { product } = useSelector((state) => state?.products)
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
-    const { addToCart } = useCartStore()
-    const { setProduct, product } = useProductStore()
+    // const { addToCart } = useCartStore()
+    // const { setProduct, product } = useProductStore()
     const { productId } = useLocalSearchParams()
     useEffect(() => {
         const fetchProductById = async () => {
@@ -17,7 +21,7 @@ const PostDetail = () => {
                 setLoading(true)
                 const res = await fetch(`https://fakestoreapi.in/api/products/${productId}`)
                 const data = await res.json()
-                setProduct(data?.product)
+                dispatch(setProduct(data?.product))
             } catch (error) {
                 setLoading(false)
                 console.log(error);
@@ -30,12 +34,13 @@ const PostDetail = () => {
         fetchProductById()
     }, [productId])
 
-    const handleAddToCart = () => {
-        addToCart(product)
+    const handleAddToCart = (product) => {
+        dispatch(addToCart(product))
         router.push("/(screens)/cart")
         Alert.alert("Product added to cart")
 
     }
+
     return loading ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size={"large"} color={"#e91e63"} />
     </View> : (
@@ -56,13 +61,21 @@ const PostDetail = () => {
                         {product?.price}</Text>
                     <Text numberOfLines={2} style={{ fontSize: 18, fontWeight: "500", marginBottom: 10 }}>{product?.brand}</Text>
                 </View>
-                <TouchableOpacity onPress={handleAddToCart} style={{ backgroundColor: "#800080", padding: 10, borderRadius: 5, marginTop: 10 }}>
+                <TouchableOpacity onPress={() => handleAddToCart({
+                    id: product?.id,
+                    title: product?.title,
+                    price: product?.price,
+                    description: product?.description,
+                    image: product?.image,
+                    brand: product?.brand,
+                    quantity: 1
+                })} style={{ backgroundColor: "#800080", padding: 10, borderRadius: 5, marginTop: 10 }}>
                     <Text style={{ color: "#fff", fontWeight: "500", textAlign: "center" }}>Add to cart</Text>
                 </TouchableOpacity>
 
             </ScrollView>
-        </SafeAreaView>
-    )
+        </SafeAreaView>)
+
 }
 
 export default PostDetail

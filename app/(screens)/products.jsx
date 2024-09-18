@@ -1,18 +1,20 @@
 import { Alert, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect } from 'react'
-import useProductStore from '../../store/useProductStore'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Link, router } from 'expo-router'
+import { useDispatch, useSelector } from 'react-redux'
+import { setProducts } from '../../store/productSlice'
 
 const PostsScreen = () => {
-    const { setProducts, products } = useProductStore()
+    const dipatch = useDispatch()
+    const { products } = useSelector((state) => state?.products)
     useEffect(() => {
         const fetchPosts = async () => {
             try {
                 const res = await fetch('https://fakestoreapi.in/api/products')
                 const data = await res?.json()
                 // setPosts(data)
-                setProducts(data?.products);
+                dipatch(setProducts(data?.products))
 
             } catch (error) {
                 Alert.alert(error)
@@ -22,6 +24,7 @@ const PostsScreen = () => {
         }
         fetchPosts()
     }, [])
+
 
     return (
         <SafeAreaView>

@@ -1,24 +1,33 @@
 import { Alert, FlatList, Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import useCartStore from '../../store/useCartStore'
+// import useCartStore from '../../store/useCartStore'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Entypo from '@expo/vector-icons/Entypo';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useSelector } from 'react-redux';
+import { increaseQuantity, decreaseQuantity } from '../../store/cartSlice';
+import { useDispatch } from 'react-redux';
 
 const CartScreen = () => {
-    const { cart, removeFromCart } = useCartStore()
+    const dispatch = useDispatch()
+    const { cartItems } = useSelector((state) => state?.cart)
 
-    const handleRemove = (id) => {
-        removeFromCart(id)
-        Alert.alert("item has been removed")
-    }
 
-    const totalAmt = cart.reduce((acc, item) => acc + item.price, 0)
+    // const handleRemove = (id) => {
+    //     removeFromCart(id)
+    //     Alert.alert("item has been removed")
+    // }
+
+
+
+
+
+    const totalAmt = cartItems.reduce((acc, item) => acc + item.price, 0)
 
     return (
         <SafeAreaView style={{ padding: 10, }}>
             <FlatList
-                data={cart}
+                data={cartItems}
                 ListHeaderComponent={() => (
                     <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", marginBottom: 10 }}>Total : ₹{totalAmt}</Text>
                 )}
@@ -46,17 +55,17 @@ const CartScreen = () => {
                                 alignItems: "center",
                                 gap: 10
                             }}>
-                                <Pressable style={{ height: 30, width: 30, borderRadius: 25, backgroundColor: "green", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <Pressable onPress={() => dispatch(increaseQuantity(item?.id))} style={{ height: 30, width: 30, borderRadius: 25, backgroundColor: "green", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                     <Entypo name="plus" size={24} color="white" />
                                 </Pressable>
-                                <Text>{1}</Text>
-                                <Pressable style={{ height: 30, width: 30, borderRadius: 25, backgroundColor: "red", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <Text>{item?.quantity}</Text>
+                                <Pressable onPress={() => dispatch(decreaseQuantity(item?.id))} style={{ height: 30, width: 30, borderRadius: 25, backgroundColor: "red", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                     <AntDesign name="minus" size={24} color="white" />
                                 </Pressable>
                             </View>
                         </View>
                         <View >
-                            <TouchableOpacity onPress={() => handleRemove(item?.id)} style={{ backgroundColor: "red", padding: 10, borderRadius: 5, marginTop: 10, }}>
+                            <TouchableOpacity style={{ backgroundColor: "red", padding: 10, borderRadius: 5, marginTop: 10, }}>
                                 <Text style={{ color: "#fff", fontWeight: "500", textAlign: "center" }}>remove</Text>
                             </TouchableOpacity>
                         </View>
@@ -75,4 +84,3 @@ const CartScreen = () => {
 
 export default CartScreen
 
-const styles = StyleSheet.create({})
