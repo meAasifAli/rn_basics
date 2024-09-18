@@ -10,6 +10,8 @@ import ModalComponent from './components/ModalComponent';
 import { useCallback, useState } from 'react';
 import SwitchComponent from './components/SwitchComponent';
 import TouchableHiglightComponent from './components/TouchableHiglight';
+import AudioComponent from './components/Audio';
+
 
 export default function App() {
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -62,6 +64,7 @@ export default function App() {
         </Text>
 
         <SwitchComponent />
+        <AudioComponent />
       </ScrollView>
 
     </SafeAreaView>
