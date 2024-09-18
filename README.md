@@ -15,3 +15,5 @@
 - Modal
 - Flatlist
 - Image
+- Expo Audio
+- Expo Camera
