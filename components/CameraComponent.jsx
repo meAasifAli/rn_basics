@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     },
     camera: {
         flex: 1,
-        height: 500
+        height: 700
     },
     buttonContainer: {
         flex: 1,

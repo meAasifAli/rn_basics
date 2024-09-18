@@ -12,6 +12,7 @@ import SwitchComponent from './components/SwitchComponent';
 import TouchableHiglightComponent from './components/TouchableHiglight';
 import AudioComponent from './components/Audio';
 import CameraComponent from './components/CameraComponent';
+import Checkbox from './components/Checkbox';
 
 
 
@@ -80,6 +81,7 @@ export default function App() {
 
         <SwitchComponent />
         <AudioComponent />
+        <Checkbox />
 
       </ScrollView>
 
@@ -91,6 +93,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingBottom: 10,
   },
   text: {
     fontSize: 20,

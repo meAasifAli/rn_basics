@@ -17,7 +17,9 @@
     "expo-av": "~14.0.7",
     "expo-barcode-scanner": "~13.0.1",
     "expo-calendar": "~13.0.5",
-    "expo-camera": "~15.0.16"
+    "expo-camera": "~15.0.16",
+    "expo-checkbox": "~3.0.0",
+    "expo-clipboard": "~6.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
