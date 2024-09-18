@@ -11,9 +11,12 @@ import { useCallback, useState } from 'react';
 import SwitchComponent from './components/SwitchComponent';
 import TouchableHiglightComponent from './components/TouchableHiglight';
 import AudioComponent from './components/Audio';
+import CameraComponent from './components/CameraComponent';
+
 
 
 export default function App() {
+  const [openCamera, setOpenCamera] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [refreshing, setRefreshing] = useState(false);
   const handlePress = () => {
@@ -38,6 +41,18 @@ export default function App() {
         }
 
       >
+        <TouchableOpacity style={{
+          backgroundColor: "#800080", margin: 10, paddingVertical: 10, borderRadius: 10, display: "flex",
+          justifyContent: "center", alignItems: "center"
+        }} onPress={() => setOpenCamera((prev) => !prev)
+        }>
+          <Text style={{ textAlign: "center", color: "#fff", fontSize: 15 }}>{
+            openCamera ? "close camera" : "open camera"
+          }</Text>
+        </TouchableOpacity>
+        {
+          openCamera && <CameraComponent />
+        }
         <TextComponent />
         <ImageComponent />
         <InputField />
@@ -65,6 +80,7 @@ export default function App() {
 
         <SwitchComponent />
         <AudioComponent />
+
       </ScrollView>
 
     </SafeAreaView>

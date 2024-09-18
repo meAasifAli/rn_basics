@@ -25,9 +25,15 @@
     },
     "plugins": [
       [
-        "expo-barcode-scanner",
+        "expo-calendar",
         {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+          "calendarPermission": "The app needs to access your calendar."
+        },
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
         }
       ]
     ]
