@@ -34,11 +34,12 @@ const PostDetail = () => {
         fetchProductById()
     }, [productId])
 
+    console.log(product);
+
     const handleAddToCart = (product) => {
         dispatch(addToCart(product))
         router.push("/(screens)/cart")
         Alert.alert("Product added to cart")
-
     }
 
     return loading ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -46,11 +47,11 @@ const PostDetail = () => {
     </View> : (
         <SafeAreaView>
             <ScrollView style={{ paddingHorizontal: 10, marginBottom: 10 }}>
-                <Pressable onPress={() => router.replace("/(screens)/posts")}>
+                <Pressable onPress={() => router.replace("/(screens)/products")}>
                     <AntDesign name="back" size={24} color="black" />
                 </Pressable>
                 <View style={{ display: "flex", justifyContent: "center", alignItems: "center", marginVertical: 20 }}>
-                    <Image resizeMode='cover' style={{ height: 350, width: 350, }} source={{
+                    <Image resizeMode='cover' style={{ height: 400, width: 400, }} source={{
                         uri: product?.image
                     }} />
                 </View>

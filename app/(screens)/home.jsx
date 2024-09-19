@@ -1,56 +1,48 @@
 
 import { useRef, useState } from 'react';
-import { Alert, Image, StyleSheet, Text, View, } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Swiper from 'react-native-swiper'
+import InputField from '../../components/InputField'
+import ButtonComponent from '../../components/Button'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from 'expo-router';
 
 
 const HomeScreen = () => {
-    const [index, setIndex] = useState(0)
-    const swiperRef = useRef(null)
-    const products = [
-        {
-            id: 1,
-            bannerUrl: "https://picsum.photos/1600/400?random=1",
-            altText: "Latest Collection - Summer 2024"
-        },
-        {
-            id: 2,
-            bannerUrl: "https://picsum.photos/1600/400?random=2",
-            altText: "Exclusive Sale - Up to 50% Off"
-        },
-        {
-            id: 3,
-            bannerUrl: "https://picsum.photos/1600/400?random=3",
-            altText: "New Arrivals - Trendy Fashion"
-        },
-        {
-            id: 4,
-            bannerUrl: "https://picsum.photos/1600/400?random=4",
-            altText: "Shop Now - Best Deals of the Season"
-        }
-    ];
 
+
+    const [serachVal, setSearchVal] = useState("")
+    const handleLogout = async () => {
+        await AsyncStorage.removeItem("user")
+        router.navigate("/")
+    }
 
     return (
         <SafeAreaView style={styles.container}>
-            <Swiper
-                ref={swiperRef}
-                onIndexChanged={(index) => setIndex(index)}
-                showsButtons={false}
-                showsPagination={true}
-                loop={false}
-                paginationStyle={{
-                    position: "absolute",
-                    bottom: 10,
-                }}
-            >
-                {products?.map((product, index) => (
-                    <View key={index} style={{ position: "relative" }}>
-                        <Image resizeMode='cover' source={{ uri: product?.bannerUrl }} style={{ width: 500, height: 400 }} />
-                    </View>
-                ))}
-            </Swiper>
+            <ScrollView style={{ padding: 10 }}>
+                <View>
+                    <Text style={{ fontWeight: "bold", fontSize: 25, padding: 10 }}>Hello Aasif</Text>
+                </View>
+                <View style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 5
+                }}>
+                    <InputField
+                        placeholder="Search for products and Much more.."
+                        value={serachVal}
+                        onValueChange={(text) => setSearchVal(text)}
+                        hasLabel={false}
+                    />
+                    <ButtonComponent
+                        title={"Search"}
+                        onPress={() => { }}
+                    />
+                </View>
+                <ButtonComponent onPress={handleLogout} title={"Logout"} />
+
+            </ScrollView>
         </SafeAreaView>
     )
 }

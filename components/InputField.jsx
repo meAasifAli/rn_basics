@@ -1,14 +1,25 @@
+import { useForm } from 'react-hook-form'
 import { StyleSheet, Text, View, TextInput } from 'react-native'
-import React, { useState } from 'react'
 
 
-const InputField = () => {
-    const [username, setUsername] = useState("")
+
+const InputField = ({ hasLabel, label, placeholder, onValueChange, value, secure, props, error }) => {
+    const {
+        register,
+        formState: { errors },
+    } = useForm()
     return (
         <View style={styles.container}>
-            <Text>username</Text>
-            <TextInput value={username} onChangeText={(text) => setUsername(text)} style={styles.input} placeholder='username' placeholderTextColor={"black"} />
-            {username !== "" && <Text>{username}</Text>}
+            {
+                hasLabel && <Text>{label}</Text>
+            }
+            <TextInput
+                value={value} onChangeText={onValueChange}
+                style={styles.input} placeholder={placeholder} placeholderTextColor={"black"}
+                secureTextEntry={secure}
+                {...props}
+            />
+            {error && <Text style={{ color: 'red', fontSize: 13 }}>{error.message}</Text>}
         </View>
     )
 }
@@ -25,10 +36,10 @@ const styles = StyleSheet.create({
     },
     input: {
         padding: 15,
-        borderColor: "#000",
+        borderColor: "#e91e63",
         borderRadius: 15,
         color: "black",
-        borderWidth: 2
+        borderWidth: 0.5
     },
     inputResult: {
         fontSize: 16,

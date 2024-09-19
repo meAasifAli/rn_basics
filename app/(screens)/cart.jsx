@@ -13,23 +13,14 @@ const CartScreen = () => {
     const { cartItems } = useSelector((state) => state?.cart)
 
 
-    // const handleRemove = (id) => {
-    //     removeFromCart(id)
-    //     Alert.alert("item has been removed")
-    // }
-
-
-
-
-
-    const totalAmt = cartItems.reduce((acc, item) => acc + item.price, 0)
+    const subTotal = cartItems.reduce((acc, item) => acc + item.price * item?.quantity, 0)
 
     return (
         <SafeAreaView style={{ padding: 10, }}>
             <FlatList
                 data={cartItems}
                 ListHeaderComponent={() => (
-                    <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", marginBottom: 10 }}>Total : ₹{totalAmt}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", marginBottom: 10 }}>Total : ₹{subTotal}</Text>
                 )}
                 renderItem={({ item }) => (
                     <View style={{
@@ -55,11 +46,11 @@ const CartScreen = () => {
                                 alignItems: "center",
                                 gap: 10
                             }}>
-                                <Pressable onPress={() => dispatch(increaseQuantity(item?.id))} style={{ height: 30, width: 30, borderRadius: 25, backgroundColor: "green", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <Pressable onPress={() => dispatch(increaseQuantity(item))} style={{ height: 30, width: 30, borderRadius: 25, backgroundColor: "green", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                     <Entypo name="plus" size={24} color="white" />
                                 </Pressable>
                                 <Text>{item?.quantity}</Text>
-                                <Pressable onPress={() => dispatch(decreaseQuantity(item?.id))} style={{ height: 30, width: 30, borderRadius: 25, backgroundColor: "red", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <Pressable onPress={() => dispatch(decreaseQuantity(item))} style={{ height: 30, width: 30, borderRadius: 25, backgroundColor: "red", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                     <AntDesign name="minus" size={24} color="white" />
                                 </Pressable>
                             </View>

@@ -14,12 +14,12 @@ export default ButtonComponent
 const styles = StyleSheet.create({
     btnContainer: {
         margin: 10,
-        backgroundColor: "#000",
+        backgroundColor: "#e91e63",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: 15,
-        borderRadius: 10
+        padding: 20,
+        borderRadius: 15
     },
     btnText: {
         color: "#fff"
